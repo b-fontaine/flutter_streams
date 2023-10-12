@@ -1,6 +1,10 @@
-# Flutter : Vos flux de données en Stream
+# Flutter : Streams, BLoC et Clean Architecture
 
-> Medium: [https://medium.com/@benotfontaine/flutter-streams-59153dddee14](https://medium.com/@benotfontaine/flutter-streams-59153dddee14)
+Responsable: Benoit FONTAINE
+Statut: En cours
+Lien: https://medium.com/@benotfontaine/flutter-craft-75e8e4a5fafc
+Type: Article de blog
+Échéance: 30 septembre 2023
 
 Dans le monde du développement logiciel, la gestion des données en temps réel est souvent une source de complexité. Imaginons une application où les données peuvent être modifiées à tout moment, par différentes sources, et où ces modifications doivent être reflétées instantanément dans l'interface utilisateur. Comment gérer efficacement ces flux de données dynamiques ? C'est ici que les **Streams** entrent en jeu.
 
@@ -203,7 +207,7 @@ StreamBuilder<WeatherData>(
 
 ```
 
-Comme vous pouvez le voir, les Streams et RxDart offrent une manière puissante et flexible de gérer des données asynchrones en Dart et Flutter. Ils permettent de manipuler, transformer et combiner des données de manière déclarative, rendant le code plus propre et plus lisible. 
+Comme vous pouvez le voir, les Streams et RxDart offrent une manière puissante et flexible de gérer des données asynchrones en Dart et Flutter. Ils permettent de manipuler, transformer et combiner des données de manière déclarative, rendant le code plus propre et plus lisible.
 
 # Injection de dépendance avec `get_it` et `injectable`
 
@@ -223,7 +227,7 @@ L'injection de dépendance est une technique de conception logicielle qui permet
 **Installation et configuration**
 
 1. Ajoutez les dépendances à votre `pubspec.yaml` :
-    
+
     ```yaml
     dependencies:
       get_it: 
@@ -234,10 +238,10 @@ L'injection de dépendance est une technique de conception logicielle qui permet
       injectable_generator: 
     
     ```
-    
+
 2. Exécutez `pub get` pour installer les dépendances.
 3. Créez vos services et utilisez les annotations fournies par `injectable` pour marquer vos classes. Par exemple, pour un service météo :
-    
+
     ```dart
     @Injectable()
     class WeatherService {
@@ -247,16 +251,16 @@ L'injection de dépendance est une technique de conception logicielle qui permet
     }
     
     ```
-    
+
 4. Exécutez la commande suivante pour générer le code d'enregistrement :
-    
+
     ```
     flutter pub run build_runner build
     
     ```
-    
+
 5. Utilisez `get_it` pour accéder à vos services dans votre application :
-    
+
     ```dart
     final getIt = GetIt.instance;
     
@@ -271,7 +275,7 @@ L'injection de dépendance est une technique de conception logicielle qui permet
     }
     
     ```
-    
+
 
 ## Intégration dans notre application météo
 
@@ -425,15 +429,8 @@ Le BLoC est une méthode pour séparer la logique métier de l'interface utilisa
 - **Input (Events)** : Les événements qui sont envoyés au BLoC.
 - **Output (States)** : Les états qui sont émis par le BLoC.
 
-**Ressemblance avec le MVVM**
-
-MVVM (Model-View-ViewModel) est un autre pattern architectural. Le BLoC partage des similitudes avec le MVVM :
-
-- **View** : Correspond aux widgets dans Flutter.
-- **ViewModel** : Semblable au BLoC, il gère la logique métier et informe la View des changements.
-- **Model** : Représente les données.
-
-La principale différence est que le BLoC utilise des streams pour communiquer entre la View et le ViewModel, tandis que le MVVM utilise généralement des observables ou d'autres mécanismes.
+Le pattern BLoC emprunte des concepts clés à la fois du MVVM et du MVI. De MVVM, il adopte l'idée d'une séparation claire entre la logique métier et l'interface utilisateur, avec un composant intermédiaire (BLoC/ViewModel) gérant la logique de présentation. De MVI, il adopte le flux de données unidirectionnel et l'idée que l'interface utilisateur génère des événements ou des intentions qui sont traités pour produire de nouveaux états.
+En combinant les meilleures parties de ces patterns, BLoC offre une architecture robuste et prévisible pour les applications Flutter, tout en s'appuyant fortement sur les streams pour gérer l'état et les événements de manière réactive.
 
 **Introduction à `flutter_bloc`**
 
@@ -524,7 +521,7 @@ En suivant les étapes ci-dessus, nous avons intégré le pattern BLoC à notre 
 
 Le pattern BLoC, avec l'aide de `flutter_bloc`, offre une manière structurée de gérer la logique métier et l'état de l'application dans Flutter. Il favorise la séparation des préoccupations, la testabilité et la réactivité, rendant le code plus propre et réactif.
 
-En vous rendant sur [https://github.com/b-fontaine/flutter-streams](https://github.com/b-fontaine/flutter-streams), vous trouverez l'ensemble consolidé de tout ce que nous venons de voir.
+En vous rendant sur [https://github.com/b-fontaine/flutter_streams](https://github.com/b-fontaine/flutter_streams), vous trouverez l'ensemble consolidé de tout ce que nous venons de voir.
 
 En combinant les streams, RxDart, l'injection de dépendance, la clean architecture et le pattern BLoC, nous obtenons une structure d'application où chaque composant a une responsabilité claire et est déconnecté des autres. Cela nous permet de tester chaque partie individuellement, de réutiliser le code et d'ajouter ou de supprimer des fonctionnalités avec un minimum de friction.
 
@@ -538,6 +535,29 @@ Notre application météo, par exemple, utilise un stream pour obtenir des mises
 - **Clean Architecture** : Une architecture qui sépare clairement la logique métier de l'interface utilisateur et des sources de données.
 - **Pattern BLoC** : Un pattern spécifique à Flutter pour séparer la logique métier de l'interface utilisateur en utilisant des streams.
 
-### Au-delà de l'architecture
+### Au-delà de l’architecture
 
-Il est essentiel de se rappeler que, bien que l'architecture soit cruciale, elle n'est qu'un élément parmi d'autres dans le développement de logiciels de qualité. D'autres pratiques, telles que le clean code, l'intégration continue et le déploiement continu (CI/CD), le développement piloté par les tests (TDD), le développement piloté par le comportement (BDD) et bien d'autres, jouent également un rôle essentiel pour garantir que votre application est non seulement bien architecturée, mais aussi robuste, testable et facile à maintenir.
+Il est essentiel de se rappeler que, bien que l’architecture soit cruciale, elle n’est qu’un élément parmi d’autres dans le développement de logiciels de qualité. D’autres pratiques, telles que le clean code, l’intégration continue et le déploiement continu (CI/CD), le développement piloté par les tests (TDD), le développement piloté par le comportement (BDD) et bien d’autres, jouent également un rôle essentiel pour garantir que votre application est non seulement bien architecturée, mais aussi robuste, testable et facile à maintenir.
+
+### Quelques références
+
+Pour aller un peu plus loin, voici une petite sélection de références.
+
+Documentation officielle:
+
+- [Documentation officielle sur les Stream](https://dart.dev/tutorials/language/streams) / [API Dart Stream](https://api.dart.dev/stable/3.1.3/dart-async/Stream-class.html)
+- [Site officiel Rx](https://reactivex.io/) / [Documentation RxDart](https://pub.dev/packages/rxdart)
+- [Documentation Officielle BLoC](https://bloclibrary.dev/#/)
+
+Articles:
+
+- [Streams in Dart](https://dev.to/lionnelt/streams-in-dart-21le) par Lionnel Tsuro
+- [Reactive Programming Using RxDart For Flutter Applications](https://medium.com/mindful-engineering/reactive-programming-using-rxdart-for-flutter-applications-part-1-a0b70e99a6e2) par Mohit Chauhan
+- [Quick Guide to BLoC as State Manager For Your Next Flutter Project](https://dev.to/yatendra2001/quick-guide-to-bloc-as-state-manager-for-your-next-flutter-project-14h8) par yatendra2001
+- [Flutter bloc for beginners](https://medium.com/flutter-community/flutter-bloc-for-beginners-839e22adb9f5) par Ana Polo
+
+Livres:
+
+- [Livre Clean Architecture de Robert C. Martin](https://amzn.eu/d/igaxWRQ): Ce livre a eu impact profond sur l’industrie du logiciel, en établissant des normes pour la conception architecturale et en encourageant une réflexion plus profonde sur la manière dont nous construisons des logiciels.
+- [Clean Code: A Handbook of Agile Software Craftsmanship par Robert C. Martin](https://amzn.eu/d/eW3myyf): Un classique sur les meilleures pratiques de codage et l’importance d’écrire un code propre.
+- [Design Patterns: Elements of Reusable Object-Oriented Software](https://a.co/d/cPDPnOH) par Erich Gamma, Richard Helm, Ralph Johnson, et John Vlissides — Un livre essentiel sur les modèles de conception en programmation orientée objet.

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_streams/dependencies_injection.dart';
 import 'package:go_router/go_router.dart';
 
+import 'injection.dart';
 import 'minimal.dart';
 
 void main() {
+  configureDependencies();
   runApp(const MyApp());
 }
 
@@ -18,6 +21,11 @@ final GoRouter _router = GoRouter(
       path: '/minimal',
       builder: (BuildContext context, GoRouterState state) =>
       const MinimalExample(title: 'Flutter Demo Home Page'),
+    ),
+    GoRoute(
+      path: '/injection',
+      builder: (BuildContext context, GoRouterState state) =>
+      const WeatherExample(),
     ),
   ],
 );
