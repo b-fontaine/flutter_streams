@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 
 import 'common/common_module.dart';
 import 'weather_clean/weather_clean.dart';
+import 'weather_full/view/weather_page.dart';
 
 @singleton
 class AppRouter {
@@ -15,7 +16,7 @@ class AppRouter {
         GoRoute(
             path: '/',
             redirect: (BuildContext context, GoRouterState state) =>
-            '/clean'
+            '/bloc'
         ),
         GoRoute(
           path: '/clean',
@@ -25,7 +26,7 @@ class AppRouter {
         GoRoute(
           path: '/bloc',
           builder: (BuildContext context, GoRouterState state) =>
-          const MainScaffold(child: Text("BLoC")),
+          const MainScaffold(child: WeatherPage()),
         ),
       ],
     );

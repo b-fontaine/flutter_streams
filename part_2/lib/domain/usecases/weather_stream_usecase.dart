@@ -8,13 +8,21 @@ import '../entities/entities_module.dart';
 @singleton
 class WeatherStreamUseCase {
   final WeatherRepository weatherRepository;
+  static const String VILLE_1 = 'Paris';
+  static const String VILLE_2 = 'New York';
 
   WeatherStreamUseCase(@Named.from(WeatherRepository) this.weatherRepository);
 
+  Future<List<WeatherData>> getWeatherData() async =>
+      [
+        WeatherData.fromDto(await weatherRepository.fetchWeather(VILLE_1)),
+        WeatherData.fromDto(await weatherRepository.fetchWeather(VILLE_2)),
+      ];
+
   Stream<List<WeatherData>> get stream =>
       Rx.combineLatest2(
-        getWeatherUpdates('Paris'),
-        getWeatherUpdates('New York'),
+        getWeatherUpdates(VILLE_1),
+        getWeatherUpdates(VILLE_2),
             (weatherParis, weatherNewYork) =>
         [
           weatherParis,

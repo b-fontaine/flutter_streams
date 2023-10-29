@@ -11,13 +11,13 @@ class WeatherClean extends StatefulWidget {
 }
 
 class _WeatherCleanState extends State<WeatherClean> {
-  final WeatherCleanInteractor weatherCleanInteractor =
+  final WeatherCleanInteractor _weatherCleanInteractor =
       getIt<WeatherCleanInteractor>();
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<String>>(
-      stream: weatherCleanInteractor.stream,
+      stream: _weatherCleanInteractor.stream,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text('Erreur : ${snapshot.error}');

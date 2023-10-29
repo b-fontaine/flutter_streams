@@ -19,6 +19,7 @@ import 'domain/usecases/weather_stream_usecase.dart' as _i7;
 import 'main.dart' as _i4;
 import 'ui/router.dart' as _i3;
 import 'ui/weather_clean/weather_interactor.dart' as _i9;
+import 'ui/weather_full/weather_interactor.dart' as _i11;
 
 extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -43,6 +44,8 @@ extension GetItInjectableX on _i1.GetIt {
       instanceName: 'WeatherStreamUseCase',
     );
     gh.singleton<_i9.WeatherCleanInteractor>(_i9.WeatherCleanInteractor(
+        gh<_i10.WeatherStreamUseCase>(instanceName: 'WeatherStreamUseCase')));
+    gh.singleton<_i11.WeatherInteractor>(_i11.WeatherInteractor(
         gh<_i10.WeatherStreamUseCase>(instanceName: 'WeatherStreamUseCase')));
     return this;
   }
