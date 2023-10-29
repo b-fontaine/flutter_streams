@@ -10,8 +10,8 @@ abstract class WeatherService {
 
 @named
 @Injectable(as: WeatherService)
-class WeatherServiceImpl
-    implements WeatherService {
+class WeatherServiceImpl implements WeatherService {
+  @factoryMethod
   @override
   Future<WeatherData> fetchWeather(String city) async {
     // Logique pour récupérer les données météo
@@ -34,20 +34,17 @@ abstract class WeatherStream {
 
 @named
 @LazySingleton(as: WeatherStream)
-class WeatherStreamImpl
-    implements WeatherStream {
+class WeatherStreamImpl implements WeatherStream {
   final WeatherService service;
   bool _cancellationToken = false;
 
   WeatherStreamImpl(@Named.from(WeatherService) this.service);
 
   @override
-  Stream<List<WeatherData>> get stream =>
-      Rx.combineLatest2(
+  Stream<List<WeatherData>> get stream => Rx.combineLatest2(
         getWeatherUpdates('Paris'),
         getWeatherUpdates('New York'),
-            (weatherParis, weatherNewYork) =>
-        [
+        (weatherParis, weatherNewYork) => [
           weatherParis,
           weatherNewYork,
         ],
@@ -68,7 +65,6 @@ class WeatherStreamImpl
 }
 
 class WeatherExample extends StatefulWidget {
-
   const WeatherExample({
     super.key,
   });
@@ -84,10 +80,7 @@ class _WeatherExampleState extends State<WeatherExample> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme
-            .of(context)
-            .colorScheme
-            .inversePrimary,
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("Votre Météo"),
       ),
       body: Center(
@@ -102,8 +95,9 @@ class _WeatherExampleState extends State<WeatherExample> {
             }
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: (snapshot.data ?? []).map((e) =>
-                  Text("${e.city} : ${e.temperatureInCelsius} °C")).toList(),
+              children: (snapshot.data ?? [])
+                  .map((e) => Text("${e.city} : ${e.temperatureInCelsius} °C"))
+                  .toList(),
             );
           },
         ),
