@@ -42,13 +42,10 @@ class WeatherStreamImpl implements WeatherStream {
 
   @override
   Stream<List<WeatherData>> get stream => Rx.combineLatest2(
-        getWeatherUpdates('Paris'),
-        getWeatherUpdates('New York'),
-        (weatherParis, weatherNewYork) => [
-          weatherParis,
-          weatherNewYork,
-        ],
-      );
+    getWeatherUpdates('Paris'),
+    getWeatherUpdates('New York'),
+    (weatherParis, weatherNewYork) => [weatherParis, weatherNewYork],
+  );
 
   Stream<WeatherData> getWeatherUpdates(String city) async* {
     while (true) {
@@ -65,9 +62,7 @@ class WeatherStreamImpl implements WeatherStream {
 }
 
 class WeatherExample extends StatefulWidget {
-  const WeatherExample({
-    super.key,
-  });
+  const WeatherExample({super.key});
 
   @override
   State<WeatherExample> createState() => _WeatherExampleState();
